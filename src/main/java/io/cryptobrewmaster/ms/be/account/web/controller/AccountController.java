@@ -13,7 +13,6 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
 @Slf4j
-@Valid
 @RequiredArgsConstructor
 @RequestMapping("/api/account")
 @RestController
@@ -22,8 +21,8 @@ public class AccountController {
     private final AccountService accountService;
 
     @PostMapping("/create/or/get/{wallet}")
-    public AccountDto createOrGet(@NotNull @PathVariable String wallet) {
-        log.info("Request to create or get account by wallet received. {}", wallet);
+    public AccountDto createOrGet(@Valid @NotNull @PathVariable String wallet) {
+        log.info("Request to create or get account by wallet received. Wallet = {}", wallet);
         AccountDto accountDto = accountService.createOrGet(wallet);
         log.info("Response on create or get account by wallet. {}", accountDto);
         return accountDto;
