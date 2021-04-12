@@ -24,8 +24,7 @@ public class AccountDto {
 
     public static AccountDto of(Account account) {
         return new AccountDto(
-                account.getAccountId(), account.getPublicAccountId(),
-                account.getNickname(), account.getWallet()
+                account.getAccountId(), account.getPublicAccountId(), account.getNickname(), account.getWallet()
         );
     }
 }
