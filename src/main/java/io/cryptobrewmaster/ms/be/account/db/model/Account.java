@@ -4,7 +4,6 @@ import io.cryptobrewmaster.ms.be.account.util.UidGenerator;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -22,17 +21,12 @@ public class Account {
 
     @Id
     @Field(ID_FIELD)
-    private ObjectId id;
+    private String id;
     private static final String ID_FIELD = "_id";
 
-    @Field(UID_FIELD)
-    @Indexed(unique = true)
-    private String uid;
-    private static final String UID_FIELD = "uid";
-
-    @Field(PUBLIC_UID_FIELD)
-    private String publicUid;
-    private static final String PUBLIC_UID_FIELD = "publicUid";
+    @Field(PUBLIC_ID_FIELD)
+    private String publicId;
+    private static final String PUBLIC_ID_FIELD = "publicId";
 
     @Field(NICKNAME_FIELD)
     private String nickname;
@@ -53,9 +47,9 @@ public class Account {
 
     public static Account of(String wallet, Clock utcClock) {
         long now = utcClock.millis();
-        var uid = UidGenerator.generate(utcClock);
-        var publicUid = UidGenerator.generate(utcClock, uid);
-        return new Account(null, uid, publicUid, "@" + wallet, wallet, now, now);
+        var id = UidGenerator.generate(utcClock);
+        var publicId = UidGenerator.generate(utcClock, id);
+        return new Account(id, publicId, "@" + wallet, wallet, now, now);
     }
 
 }

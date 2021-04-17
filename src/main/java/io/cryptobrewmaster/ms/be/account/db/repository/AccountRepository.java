@@ -8,12 +8,10 @@ import java.util.Optional;
 
 public interface AccountRepository extends MongoRepository<Account, String> {
 
-    Optional<Account> findByAccountId(String accountId);
-
-    default Account getByAccountId(String accountId) {
-        return findByAccountId(accountId)
+    default Account getById(String id) {
+        return findById(id)
                 .orElseThrow(() -> new ParametersAbsentOrInvalidException(
-                        String.format("Account with id = %s not exists in system", accountId)
+                        String.format("Account with id = %s not exists in system", id)
                 ));
     }
 
