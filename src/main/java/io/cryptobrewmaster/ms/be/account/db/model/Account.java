@@ -25,14 +25,14 @@ public class Account {
     private ObjectId id;
     private static final String ID_FIELD = "_id";
 
-    @Field(ACCOUNT_ID_FIELD)
+    @Field(UID_FIELD)
     @Indexed(unique = true)
-    private String accountId;
-    private static final String ACCOUNT_ID_FIELD = "accountId";
+    private String uid;
+    private static final String UID_FIELD = "uid";
 
-    @Field(PUBLIC_ACCOUNT_ID_FIELD)
-    private String publicAccountId;
-    private static final String PUBLIC_ACCOUNT_ID_FIELD = "publicAccountId";
+    @Field(PUBLIC_UID_FIELD)
+    private String publicUid;
+    private static final String PUBLIC_UID_FIELD = "publicUid";
 
     @Field(NICKNAME_FIELD)
     private String nickname;
@@ -53,9 +53,9 @@ public class Account {
 
     public static Account of(String wallet, Clock utcClock) {
         long now = utcClock.millis();
-        var accountId = UidGenerator.generate(utcClock);
-        var publicAccountId = UidGenerator.generate(utcClock, accountId);
-        return new Account(null, accountId, publicAccountId, "@" + wallet, wallet, now, now);
+        var uid = UidGenerator.generate(utcClock);
+        var publicUid = UidGenerator.generate(utcClock, uid);
+        return new Account(null, uid, publicUid, "@" + wallet, wallet, now, now);
     }
 
 }

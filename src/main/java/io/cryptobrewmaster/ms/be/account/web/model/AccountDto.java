@@ -14,9 +14,9 @@ import javax.validation.constraints.NotBlank;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class AccountDto {
     @NotBlank
-    private String accountId;
+    private String uid;
     @NotBlank
-    private String publicAccountId;
+    private String publicUid;
     @NotBlank
     private String nickname;
     @NotBlank
@@ -24,7 +24,7 @@ public class AccountDto {
 
     public static AccountDto of(Account account) {
         return new AccountDto(
-                account.getAccountId(), account.getPublicAccountId(), account.getNickname(), account.getWallet()
+                account.getUid(), account.getPublicUid(), account.getNickname(), account.getWallet()
         );
     }
 }
