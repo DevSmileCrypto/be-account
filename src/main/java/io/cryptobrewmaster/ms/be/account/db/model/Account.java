@@ -37,6 +37,10 @@ public class Account {
     private String wallet;
     private static final String WALLET_FIELD = "wallet";
 
+    @Field(INITIALIZED_FIELD)
+    private boolean initialized;
+    private static final String INITIALIZED_FIELD = "initialized";
+
     @Field(CREATED_DATE_FIELD)
     private Long createdDate;
     private static final String CREATED_DATE_FIELD = "createdDate";
@@ -49,7 +53,7 @@ public class Account {
         long now = utcClock.millis();
         var id = UidGenerator.generate(utcClock);
         var publicId = UidGenerator.generate(utcClock, id);
-        return new Account(id, publicId, "@" + wallet, wallet, now, now);
+        return new Account(id, publicId, "@" + wallet, wallet, false, now, now);
     }
 
 }

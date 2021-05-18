@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 @Data
 @NoArgsConstructor
@@ -21,10 +22,13 @@ public class AccountDto {
     private String nickname;
     @NotBlank
     private String wallet;
+    @NotNull
+    private boolean initialized;
 
     public static AccountDto of(Account account) {
         return new AccountDto(
-                account.getId(), account.getPublicId(), account.getNickname(), account.getWallet()
+                account.getId(), account.getPublicId(), account.getNickname(), account.getWallet(),
+                account.isInitialized()
         );
     }
 }

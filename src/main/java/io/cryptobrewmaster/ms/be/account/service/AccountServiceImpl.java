@@ -21,11 +21,19 @@ public class AccountServiceImpl implements AccountService {
     public AccountDto createOrGet(String wallet) {
         Optional<Account> accountOptional = accountRepository.findByWallet(wallet);
         if (accountOptional.isEmpty()) {
-            Account account = Account.of(wallet, utcClock);
+            var account = Account.of(wallet, utcClock);
             account = accountRepository.save(account);
             return AccountDto.of(account);
         }
         return AccountDto.of(accountOptional.get());
+    }
+
+    @Override
+    public AccountDto initialize(String accountId) {
+        var account = accountRepository.getById(accountId);
+        account.setInitialized(true);
+        account = accountRepository.save(account);
+        return AccountDto.of(account);
     }
 
 }
