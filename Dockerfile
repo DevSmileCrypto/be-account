@@ -1,5 +1,5 @@
 #1
-FROM gradle:6.4.1-jdk11 AS BUILD_IMAGE
+FROM gradle:6.8.3-jdk11 AS BUILD_IMAGE
 
 ARG project_path=.
 ARG gradle_env=prod
