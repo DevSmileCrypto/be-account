@@ -43,7 +43,7 @@ build() {
 }
 
 run() {
-  id=$(docker ps -a | grep $DOCKER_CONTAINER_NAME | awk '{print $1}')
+  id=$(docker ps -a | grep -w $DOCKER_CONTAINER_NAME | awk '{print $1}')
   if [[ ! -z "$id" ]]; then
     echo "Container with $DOCKER_CONTAINER_NAME already launched. Please stop and remove it for run again."
     return 1
