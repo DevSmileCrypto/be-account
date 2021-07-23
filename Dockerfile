@@ -8,7 +8,7 @@ RUN mkdir /apps
 COPY --chown=gradle:gradle $project_path /apps
 WORKDIR /apps
 
-RUN gradle -Penv=$gradle_env clean build
+RUN gradle clean build
 
 #2
 FROM openjdk:11-jre
