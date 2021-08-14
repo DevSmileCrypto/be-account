@@ -5,9 +5,9 @@ import io.cryptobrewmaster.ms.be.account.db.repository.AccountRepository;
 import io.cryptobrewmaster.ms.be.account.web.model.AccountDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import reactor.core.publisher.Mono;
 
 import java.time.Clock;
-import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service
@@ -18,22 +18,23 @@ public class AccountServiceImpl implements AccountService {
     private final Clock utcClock;
 
     @Override
-    public AccountDto createOrGet(String wallet) {
-        Optional<Account> accountOptional = accountRepository.findByWallet(wallet);
-        if (accountOptional.isEmpty()) {
-            var account = Account.of(wallet, utcClock);
-            account = accountRepository.save(account);
-            return AccountDto.of(account);
-        }
-        return AccountDto.of(accountOptional.get());
+    public Mono<AccountDto> createOrGet(String wallet) {
+        return accountRepository.findByWallet(wallet)
+                .switchIfEmpty(Mono.defer(() -> {
+                    var account = Account.of(wallet, utcClock);
+                    return accountRepository.save(account);
+                }))
+                .map(AccountDto::of);
     }
 
     @Override
-    public AccountDto initialize(String accountId) {
-        var account = accountRepository.getById(accountId);
-        account.setInitialized(true);
-        account = accountRepository.save(account);
-        return AccountDto.of(account);
+    public Mono<AccountDto> initialize(String accountId) {
+        return accountRepository.findById(accountId)
+                .flatMap(account -> {
+                    account.setInitialized(true);
+                    return accountRepository.save(account);
+                })
+                .map(AccountDto::of);
     }
 
 }
