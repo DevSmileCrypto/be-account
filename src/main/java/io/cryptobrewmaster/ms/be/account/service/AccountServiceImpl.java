@@ -27,14 +27,4 @@ public class AccountServiceImpl implements AccountService {
                 .map(AccountDto::of);
     }
 
-    @Override
-    public Mono<AccountDto> initialize(String accountId) {
-        return accountRepository.findById(accountId)
-                .flatMap(account -> {
-                    account.setInitialized(true);
-                    return accountRepository.save(account);
-                })
-                .map(AccountDto::of);
-    }
-
 }

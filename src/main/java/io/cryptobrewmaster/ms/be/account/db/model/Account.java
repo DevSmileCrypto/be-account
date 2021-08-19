@@ -53,7 +53,7 @@ public class Account {
         long now = utcClock.millis();
         var id = UidGenerator.generate(utcClock);
         var publicId = UidGenerator.generate(utcClock, id);
-        return new Account(id, publicId, "@" + wallet, wallet, false, now, now);
+        return new Account(id, publicId, "@" + wallet, wallet, true, now, now);
     }
 
 }

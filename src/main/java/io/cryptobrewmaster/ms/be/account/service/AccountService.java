@@ -7,6 +7,4 @@ public interface AccountService {
 
     Mono<AccountDto> createOrGet(String wallet);
 
-    Mono<AccountDto> initialize(String accountId);
-
 }

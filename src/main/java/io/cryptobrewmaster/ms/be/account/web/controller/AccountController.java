@@ -6,7 +6,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import reactor.core.publisher.Mono;
@@ -25,11 +24,6 @@ public class AccountController {
     @PostMapping("/create/or/get/{wallet}")
     public Mono<AccountDto> createOrGet(@Valid @NotNull @PathVariable String wallet) {
         return accountService.createOrGet(wallet);
-    }
-
-    @PutMapping("/initialize/{accountId}")
-    public Mono<AccountDto> initialize(@Valid @NotNull @PathVariable String accountId) {
-        return accountService.initialize(accountId);
     }
 
 }
